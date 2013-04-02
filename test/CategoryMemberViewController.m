@@ -41,7 +41,7 @@
 {
     [super viewDidLoad];
     self.categories = [[[Categories alloc] init] autorelease];
-
+    
     UIBarButtonItem * barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
     self.navigationItem.rightBarButtonItem = barButtonItem;
     [barButtonItem release];
@@ -50,6 +50,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    self.fetchedResultsController = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
