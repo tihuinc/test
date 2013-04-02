@@ -1,0 +1,42 @@
+This application links against a static library called libTestUtils.
+The project includes both the device and simulator versions of this library.
+If you'd like to run this app on a device (performance profiling) you'll need to link against the device version.
+
+Tasks:
+
+Fix memory leaks using Instruments.
+
+Support landscape orientation.
+
+Add "previousValue" attribute to the CategoryMember property.
+
+Display the title of the category in the navigation bar.
+
+Implement the -refresh method in CategoryMemberViewController.
+You'll need to do this before any data is displayed.
+This action is invoked when the user taps the refresh button.
+
+The table view cells should display the difference between the new value and the previous value.
+For example, "+1,100" or "-1,200"
+
+Add an arrow accessory (Arrow.png) to the table view cells to indicate whether the CategoryMember's value is greater or less than its previous value.
+If greater, arrow should be pointed up.
+If less, arrow should be pointed down.
+
+Using instruments, identify and list the most significant performance issues.
+Resolve performance issues.
+
+Create a new arrow accessory.
+Subclass UIView.
+Your class should have a "color" property that allows the color of the arrow to be changed.
+Using CoreGraphics, draw the triangle with the color specified by the color property.
+Update CategoryMemberViewController to display red arrows when the values are down and green arrows when the values are up.
+
+Add a toolbar.
+Add a segmented control to the toolbar.
+The segmented control should have three buttons. An up arrow, down arrow, and "ALL" button. (up.png and down.png)
+When the up arrow is tapped, only display items whose value is greater than their previous value.
+When the down arrow is tapped, only display items whose value is less than the previous value.
+When the ALL button is tapped, display all items.
+
+Feel free to add any of your own improvements.
