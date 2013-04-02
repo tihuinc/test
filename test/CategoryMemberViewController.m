@@ -73,6 +73,11 @@
      */
     [TestUtils refreshCategoriesJSONFile];
     [self parseJSONFileForCategories];
+    [self displayNavigationTitle];
+}
+
+- (void)displayNavigationTitle {
+    self.navigationItem.title = [[self.categories allCategoryNames] objectAtIndex:0];
 }
 
 - (void)parseJSONFileForCategories {
