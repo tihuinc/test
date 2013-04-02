@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76E6B823170B3A6100A49105 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6B822170B3A6100A49105 /* Category.m */; };
 		8BBD069B155B0C2000FFD4EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBD069A155B0C2000FFD4EF /* UIKit.framework */; };
 		8BBD069D155B0C2000FFD4EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBD069C155B0C2000FFD4EF /* Foundation.framework */; };
 		8BBD069F155B0C2000FFD4EF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBD069E155B0C2000FFD4EF /* CoreGraphics.framework */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		76E6B821170B3A6100A49105 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		76E6B822170B3A6100A49105 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		8BBD0696155B0C2000FFD4EF /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD069A155B0C2000FFD4EF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8BBD069C155B0C2000FFD4EF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -141,6 +144,8 @@
 				8BBD071F155B24F400FFD4EF /* README */,
 				8BBD06AB155B0C2000FFD4EF /* AppDelegate.h */,
 				8BBD06AC155B0C2000FFD4EF /* AppDelegate.m */,
+				76E6B821170B3A6100A49105 /* Category.h */,
+				76E6B822170B3A6100A49105 /* Category.m */,
 				8BBD06B1155B0C2000FFD4EF /* CategoryMemberViewController.h */,
 				8BBD06B2155B0C2000FFD4EF /* CategoryMemberViewController.m */,
 				8BBD06B7155B0C2000FFD4EF /* CategoryMemberViewController.xib */,
@@ -330,6 +335,7 @@
 				8BBD06AD155B0C2000FFD4EF /* AppDelegate.m in Sources */,
 				8BBD06B0155B0C2000FFD4EF /* test.xcdatamodeld in Sources */,
 				8BBD06B3155B0C2000FFD4EF /* CategoryMemberViewController.m in Sources */,
+				76E6B823170B3A6100A49105 /* Category.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +511,7 @@
 				8BBD06D7155B0C2000FFD4EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BBD06D8155B0C2000FFD4EF /* Build configuration list for PBXNativeTarget "testTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +520,7 @@
 				8BBD06DA155B0C2000FFD4EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
