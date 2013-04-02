@@ -76,10 +76,6 @@
     [self displayNavigationTitle];
 }
 
-- (void)displayNavigationTitle {
-    self.navigationItem.title = [[self.categories allCategoryNames] objectAtIndex:0];
-}
-
 - (void)parseJSONFileForCategories {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -92,6 +88,10 @@
 }
 
 #pragma mark UITableView
+
+- (void)displayNavigationTitle {
+    self.navigationItem.title = [[self.categories allCategoryNames] objectAtIndex:0];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
