@@ -20,6 +20,7 @@
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize categories;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,11 +34,13 @@
 {
     [_fetchedResultsController release];
     [super dealloc];
+    [categories release];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.categories = [[[Categories alloc] init] autorelease];
 
     UIBarButtonItem * barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
     self.navigationItem.rightBarButtonItem = barButtonItem;
@@ -69,20 +72,18 @@
      5) You will need to add NSManagedObject instances to the view controller's managedObjectContext.
      */
     [TestUtils refreshCategoriesJSONFile];
-    NSData* data = [[self retrieveFileContent] dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSString *name = [jsonDict objectForKey:@"name"];
-    NSLog(@"Name is %@", name);
-
+    [self parseJSONFileForCategories];
 }
 
-- (NSString *)retrieveFileContent {
+- (void)parseJSONFileForCategories {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"categories.json"];
     NSString * content = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
-    NSLog(@"content is %@", content);
-    return content;
+    
+    NSData* data = [content dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    [self.categories writeToLocalStorage:jsonDict];
 }
 
 #pragma mark UITableView

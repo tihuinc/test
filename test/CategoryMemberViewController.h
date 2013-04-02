@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "Categories.h"
 
 
 @interface CategoryMemberViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) Categories * categories;
 
 - (IBAction)refresh:(id)sender;
 @end

@@ -1,5 +1,5 @@
 //
-//  Category.h
+//  Categories.h
 //  test
 //
 //  Created by Hu, Leon on 4/2/13.
@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Category : NSObject
+@interface Categories : NSObject
 
-@property (nonatomic, copy) NSDictionary *categoryDict;
+@property (nonatomic, copy) NSDictionary *categoriesDict;
 
-- (void)writeToLocalStorage;
+- (void)writeToLocalStorage: (NSDictionary *)categoriesDict;
 - (void)readFromLocalStorage;
 - (NSArray *)allCategories;
-- (NSArray *)allCountries;
+- (NSArray *)allCategoryNames;
 
 @end
