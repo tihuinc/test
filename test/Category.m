@@ -8,23 +8,17 @@
 
 #import "Category.h"
 
-@interface Category()
-
-@property (nonatomic, copy) NSDictionary *categoryDict;
-- (void)writeToLocalStorage;
-- (void)readFromLocalStorage;
-
-@end
 
 @implementation Category
 
+@synthesize categoryDict;
+
 - (id)init {
     if (self = [super init]) {
+        [self readFromLocalStorage];
     }
     return self;
 }
-
-
 
 - (NSArray *)allCategories {
     return NULL;

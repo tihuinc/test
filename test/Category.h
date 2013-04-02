@@ -10,6 +10,10 @@
 
 @interface Category : NSObject
 
+@property (nonatomic, copy) NSDictionary *categoryDict;
+
+- (void)writeToLocalStorage;
+- (void)readFromLocalStorage;
 - (NSArray *)allCategories;
 - (NSArray *)allCountries;
 
