@@ -69,10 +69,16 @@
      5) You will need to add NSManagedObject instances to the view controller's managedObjectContext.
      */
     [TestUtils refreshCategoriesJSONFile];
-    
-    [[NSException exceptionWithName:NSGenericException reason:@"The -refresh method must be implemented." userInfo:nil] raise];
+    NSString *content = [self retrieveFileContent];
+    NSLog(@"Content is : %@", content);
 }
 
+- (NSString *)retrieveFileContent {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"categories.json"];
+    return [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
+}
 
 #pragma mark UITableView
 
