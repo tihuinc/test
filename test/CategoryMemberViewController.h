@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) Categories * categories;
+@property (strong, nonatomic) NSString * color;
 
-- (IBAction)refresh:(id)sender;
+- (void)refresh:(id)sender;
 @end
