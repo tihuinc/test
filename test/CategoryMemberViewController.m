@@ -102,8 +102,8 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
     [request setPredicate:predicate];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc]
+                                        initWithKey:@"name" ascending:YES] autorelease];
     [request setSortDescriptors:@[sortDescriptor]];
     
     NSError *error;
