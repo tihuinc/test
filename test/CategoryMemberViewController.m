@@ -23,7 +23,6 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize categories;
-@synthesize color;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -263,17 +262,63 @@
     NSNumber *previousValue = [object primitiveValueForKey:@"previousValue"];
     NSNumber *difference = [NSNumber numberWithDouble:([value doubleValue] - [previousValue doubleValue])];
     
-    cell.imageView.image = [UIImage imageNamed:@"Arrow.png"];
+
     if ([difference doubleValue] > 0)
     {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"+%@", [numberFormatter stringFromNumber:difference]];
+        cell.imageView.image = [self maskImageWithColor:@"green" withMask:[UIImage imageNamed:@"Arrow.png"]];
     }
     else {
         cell.detailTextLabel.text = [numberFormatter stringFromNumber:difference];
+        cell.imageView.image = [self maskImageWithColor:@"red" withMask:[UIImage imageNamed:@"Arrow.png"]];
         cell.imageView.center = CGPointMake(100.0, 100.0);
         cell.imageView.transform = CGAffineTransformMakeRotation(2*M_PI_2);
     }
     [numberFormatter release];
+}
+
+- (UIImage*) maskImageWithColor:(NSString *)triangleColor withMask:(UIImage *) mask
+{
+    UIImage *image = [[[UIImage alloc] init] autorelease];
+    if ([triangleColor isEqualToString:@"green"]){
+       image = [self imageWithColor:[UIColor greenColor]];
+    }
+    else{
+       image = [self imageWithColor:[UIColor redColor]];
+    }
+
+    CGImageRef imageReference = image.CGImage;
+    CGImageRef maskReference = mask.CGImage;
+    
+    CGImageRef imageMask = CGImageMaskCreate(CGImageGetWidth(maskReference),
+                                             CGImageGetHeight(maskReference),
+                                             CGImageGetBitsPerComponent(maskReference),
+                                             CGImageGetBitsPerPixel(maskReference),
+                                             CGImageGetBytesPerRow(maskReference),
+                                             CGImageGetDataProvider(maskReference),
+                                             NULL, // Decode is null
+                                             YES // Should interpolate
+                                             );
+    
+    CGImageRef maskedReference = CGImageCreateWithMask(imageReference, imageMask);
+    CGImageRelease(imageMask);
+    
+    UIImage *maskedImage = [UIImage imageWithCGImage:maskedReference];
+    CGImageRelease(maskedReference);
+    
+    return maskedImage;
+}
+
+- (UIImage *)imageWithColor:(UIColor *)imageColor {
+    CGRect rect = CGRectMake(0, 0, 200, 200);
+    // Create a 1 by 1 pixel context
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    [imageColor setFill];
+    UIRectFill(rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 @end
