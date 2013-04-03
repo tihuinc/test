@@ -8,6 +8,7 @@
 
 #import "CategoryMemberViewController.h"
 #import "TestUtils.h"
+#import "AppDelegate.h"
 
 
 @interface CategoryMemberViewController ()
@@ -33,24 +34,19 @@
 - (void)dealloc
 {
     [_fetchedResultsController release];
+    [_managedObjectContext release];
+    [self.categories release];
     [super dealloc];
-    [categories release];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     self.categories = [[[Categories alloc] init] autorelease];
     
-    UIBarButtonItem * barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
+    UIBarButtonItem * barButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)] autorelease];
     self.navigationItem.rightBarButtonItem = barButtonItem;
-    [barButtonItem release];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    self.fetchedResultsController = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -58,10 +54,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationMaskLandscape);
 }
 
-/*
- TODO Implement the refresh action.
- */
-- (IBAction)refresh:(id)sender
+- (void)refresh:(id)sender
 {
     /*
      The following method generates an updated json file containing updated values for the category displayed by this view controller.
@@ -107,10 +100,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil] autorelease];
     cell.accessoryType = UITableViewCellAccessoryNone;
     [self configureCell:cell atIndexPath:indexPath];
-    [cell release];
     return cell;
 }
 
