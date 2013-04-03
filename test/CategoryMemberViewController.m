@@ -258,8 +258,17 @@
     
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *value = [object primitiveValueForKey:@"value"];
+    NSNumber *previousValue = [object primitiveValueForKey:@"previousValue"];
+    NSNumber *difference = [NSNumber numberWithDouble:([value doubleValue] - [previousValue doubleValue])];
     
-    cell.detailTextLabel.text = [numberFormatter stringFromNumber:[object primitiveValueForKey:@"value"]];
+    if ([difference doubleValue] > 0)
+    {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"+%@", [numberFormatter stringFromNumber:difference]];
+    }
+    else {
+        cell.detailTextLabel.text = [numberFormatter stringFromNumber:difference];
+    }
     [numberFormatter release];
 }
 
