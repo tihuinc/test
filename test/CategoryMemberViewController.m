@@ -42,11 +42,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initializeToolbar];
 
     self.categories = [[[Categories alloc] init] autorelease];
     
     UIBarButtonItem * barButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)] autorelease];
     self.navigationItem.rightBarButtonItem = barButtonItem;
+}
+
+- (void)initializeToolbar{
+    self.navigationController.toolbarHidden = NO;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
