@@ -9,6 +9,7 @@
 #import "CategoryMemberViewController.h"
 #import "TestUtils.h"
 #import "AppDelegate.h"
+#import "CategoryMember.h"
 
 
 @interface CategoryMemberViewController ()
@@ -66,7 +67,6 @@
      */
     [TestUtils refreshCategoriesJSONFile];
     [self parseJSONFileForCategories];
-    [self displayNavigationTitle];
 }
 
 - (void)parseJSONFileForCategories {
@@ -78,18 +78,38 @@
     NSData* data = [content dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     [self.categories writeToLocalStorage:jsonDict];
+    [self processCategoryData];
+}
+
+- (void)processCategoryData{
+    NSString * categoryName = [[self.categories allCategoryNames] objectAtIndex:0];
+    self.navigationItem.title = categoryName;
+    NSArray * members = [self.categories allCategoryMembersForCategory:categoryName];
+    for (NSDictionary *member in members){
+        NSLog(@"Adding member %@", member);
+        [self addToCategoryMemberCoreData:[member objectForKey:@"name"] Value:[member objectForKey:@"value"]];
+    }
 }
 
 - (void)addToCategoryMemberCoreData:(NSString *)name Value:(NSNumber *)value
 {
+    NSManagedObjectContext *moc = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     
+    CategoryMember *categoryMember = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:moc];
+    categoryMember.name = name;
+    categoryMember.value = value;
+
+    NSError *error = nil;
+    if (![moc save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    NSLog(@"member is %@", categoryMember);
 }
 
 #pragma mark UITableView
-
-- (void)displayNavigationTitle {
-    self.navigationItem.title = [[self.categories allCategoryNames] objectAtIndex:0];
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
