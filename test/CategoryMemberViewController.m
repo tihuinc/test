@@ -262,12 +262,15 @@
     NSNumber *previousValue = [object primitiveValueForKey:@"previousValue"];
     NSNumber *difference = [NSNumber numberWithDouble:([value doubleValue] - [previousValue doubleValue])];
     
+    cell.imageView.image = [UIImage imageNamed:@"Arrow.png"];
     if ([difference doubleValue] > 0)
     {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"+%@", [numberFormatter stringFromNumber:difference]];
     }
     else {
         cell.detailTextLabel.text = [numberFormatter stringFromNumber:difference];
+        cell.imageView.center = CGPointMake(100.0, 100.0);
+        cell.imageView.transform = CGAffineTransformMakeRotation(2*M_PI_2);
     }
     [numberFormatter release];
 }
