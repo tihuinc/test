@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04769AF3170BAD7D00636A2F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04769AF2170BAD7D00636A2F /* Default-568h@2x.png */; };
+		04769AF6170BB08B00636A2F /* CategoryMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 04769AF5170BB08A00636A2F /* CategoryMember.m */; };
 		76E6B823170B3A6100A49105 /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6B822170B3A6100A49105 /* Categories.m */; };
 		8BBD069B155B0C2000FFD4EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBD069A155B0C2000FFD4EF /* UIKit.framework */; };
 		8BBD069D155B0C2000FFD4EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBD069C155B0C2000FFD4EF /* Foundation.framework */; };
@@ -46,6 +47,8 @@
 
 /* Begin PBXFileReference section */
 		04769AF2170BAD7D00636A2F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		04769AF4170BB08A00636A2F /* CategoryMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryMember.h; sourceTree = "<group>"; };
+		04769AF5170BB08A00636A2F /* CategoryMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryMember.m; sourceTree = "<group>"; };
 		76E6B821170B3A6100A49105 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
 		76E6B822170B3A6100A49105 /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Categories.m; sourceTree = "<group>"; };
 		8BBD0696155B0C2000FFD4EF /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +152,8 @@
 				8BBD06AC155B0C2000FFD4EF /* AppDelegate.m */,
 				76E6B821170B3A6100A49105 /* Categories.h */,
 				76E6B822170B3A6100A49105 /* Categories.m */,
+				04769AF4170BB08A00636A2F /* CategoryMember.h */,
+				04769AF5170BB08A00636A2F /* CategoryMember.m */,
 				8BBD06B1155B0C2000FFD4EF /* CategoryMemberViewController.h */,
 				8BBD06B2155B0C2000FFD4EF /* CategoryMemberViewController.m */,
 				8BBD06B7155B0C2000FFD4EF /* CategoryMemberViewController.xib */,
@@ -340,6 +345,7 @@
 				8BBD06B0155B0C2000FFD4EF /* test.xcdatamodeld in Sources */,
 				8BBD06B3155B0C2000FFD4EF /* CategoryMemberViewController.m in Sources */,
 				76E6B823170B3A6100A49105 /* Categories.m in Sources */,
+				04769AF6170BB08B00636A2F /* CategoryMember.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
