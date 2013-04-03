@@ -35,7 +35,6 @@
 {
     [_fetchedResultsController release];
     [_managedObjectContext release];
-    [self.categories release];
     [super dealloc];
 }
 
