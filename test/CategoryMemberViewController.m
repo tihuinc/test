@@ -51,7 +51,15 @@
 }
 
 - (void)initializeToolbar{
+    NSArray *itemArray = [NSArray arrayWithObjects: @"One", @"Two", @"Three", nil];
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+    [segmentedControl addTarget:self
+                         action:@selector(pickOne:)
+               forControlEvents:UIControlEventValueChanged];
+    [self.navigationController.toolbar addSubview:segmentedControl];
+
     self.navigationController.toolbarHidden = NO;
+    [segmentedControl release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
