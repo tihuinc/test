@@ -14,5 +14,6 @@
 @dynamic name;
 @dynamic previousValue;
 @dynamic value;
+@dynamic difference;
 
 @end

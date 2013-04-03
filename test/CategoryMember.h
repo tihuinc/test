@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * previousValue;
 @property (nonatomic, retain) NSNumber * value;
+@property (nonatomic, retain) NSNumber * difference;
 
 @end

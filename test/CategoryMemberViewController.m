@@ -23,6 +23,7 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize categories;
+@synthesize fetchControl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,15 +52,27 @@
 }
 
 - (void)initializeToolbar{
-    NSArray *itemArray = [NSArray arrayWithObjects: @"One", @"Two", @"Three", nil];
-    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-    [segmentedControl addTarget:self
-                         action:@selector(pickOne:)
+    NSArray *itemArray = [NSArray arrayWithObjects: [UIImage imageNamed:@"up.png"], [UIImage imageNamed:@"down.png"], @"All", nil];
+    self.fetchControl = [[[UISegmentedControl alloc] initWithItems:itemArray] autorelease];
+    [fetchControl addTarget:self
+                         action:@selector(changeFilter:)
                forControlEvents:UIControlEventValueChanged];
-    [self.navigationController.toolbar addSubview:segmentedControl];
+    [self.navigationController.toolbar addSubview:fetchControl];
 
     self.navigationController.toolbarHidden = NO;
-    [segmentedControl release];
+    [fetchControl release];
+}
+
+- (void)changeFilter:(id)sender {
+    self.fetchedResultsController = nil;
+    [self fetch];
+}
+
+- (void)fetch {
+    NSError *error = nil;
+    BOOL success = [self.fetchedResultsController performFetch:&error];
+    NSAssert2(success, @"Unhandled error performing fetch at CategoryMemberViewController, line %d: %@", __LINE__, [error localizedDescription]);
+    [self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -126,12 +139,14 @@
         CategoryMember *categoryMember = [NSEntityDescription insertNewObjectForEntityForName:@"CategoryMember" inManagedObjectContext:moc];
         categoryMember.name = name;
         categoryMember.value = value;
+        categoryMember.difference = value;
     }
     else{
         CategoryMember *member = [array objectAtIndex:0];
         member.previousValue = member.value;
         member.name = name;
         member.value = value;
+        member.difference =  [NSNumber numberWithDouble:([member.value doubleValue] - [member.previousValue doubleValue])];
     }
 
     if (![moc save:&error]) {
@@ -179,24 +194,29 @@
     if (nil != _fetchedResultsController) {
         return _fetchedResultsController;
     }
-    
+
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-    // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"CategoryMember" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:10];
+    if ([self.fetchControl selectedSegmentIndex] == 0)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"difference >= 0"];
+        [fetchRequest setPredicate:predicate];
+    }
+    else if ([self.fetchControl selectedSegmentIndex] == 1){
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"difference < 0"];
+        [fetchRequest setPredicate:predicate];
+    }
     
-    // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-    
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"] autorelease];
+    NSFetchedResultsController *aFetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil] autorelease];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -271,10 +291,7 @@
     
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSNumber *value = [object primitiveValueForKey:@"value"];
-    NSNumber *previousValue = [object primitiveValueForKey:@"previousValue"];
-    NSNumber *difference = [NSNumber numberWithDouble:([value doubleValue] - [previousValue doubleValue])];
-    
+    NSNumber *difference = [object primitiveValueForKey:@"difference"];
 
     if ([difference doubleValue] > 0)
     {
@@ -287,12 +304,13 @@
         cell.imageView.center = CGPointMake(100.0, 100.0);
         cell.imageView.transform = CGAffineTransformMakeRotation(2*M_PI_2);
     }
+
     [numberFormatter release];
 }
 
 - (UIImage*) maskImageWithColor:(NSString *)triangleColor withMask:(UIImage *) mask
 {
-    UIImage *image = [[[UIImage alloc] init] autorelease];
+    UIImage *image;
     if ([triangleColor isEqualToString:@"green"]){
        image = [self imageWithColor:[UIColor greenColor]];
     }
