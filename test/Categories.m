@@ -7,8 +7,6 @@
 //
 
 #import "Categories.h"
-#import "CategoryMember.h"
-
 
 @implementation Categories
 
@@ -63,11 +61,6 @@
     }
 
     return [members autorelease];
-}
-
-- (void)addToCategoryMemberCoreData:(NSString *)name Value:(NSNumber *)value
-{
-    
 }
 
 @end

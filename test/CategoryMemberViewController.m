@@ -67,7 +67,6 @@
     [TestUtils refreshCategoriesJSONFile];
     [self parseJSONFileForCategories];
     [self displayNavigationTitle];
-//    [self.categories allCategoryMembersForCategory:[[self.categories allCategoryNames] objectAtIndex:0]];
 }
 
 - (void)parseJSONFileForCategories {
@@ -79,6 +78,11 @@
     NSData* data = [content dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     [self.categories writeToLocalStorage:jsonDict];
+}
+
+- (void)addToCategoryMemberCoreData:(NSString *)name Value:(NSNumber *)value
+{
+    
 }
 
 #pragma mark UITableView
