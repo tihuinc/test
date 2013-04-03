@@ -50,4 +50,24 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (NSArray *)allCategoryMembersForCategory:(NSString *)categoryName {
+    NSMutableArray *members = [NSMutableArray new];
+    for (NSDictionary *category in [self allCategories]) {
+        if ([categoryName isEqualToString:category[@"name"]])
+        {
+            for (NSDictionary *member in category[@"objects"]) {
+                [members addObject:member];
+            }
+            break;
+        }
+    }
+
+    return [members autorelease];
+}
+
+- (void)addToCategoryMemberCoreData:(NSString *)name Value:(NSNumber *)value
+{
+    
+}
+
 @end

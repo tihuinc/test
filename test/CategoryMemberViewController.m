@@ -67,6 +67,7 @@
     [TestUtils refreshCategoriesJSONFile];
     [self parseJSONFileForCategories];
     [self displayNavigationTitle];
+//    [self.categories allCategoryMembersForCategory:[[self.categories allCategoryNames] objectAtIndex:0]];
 }
 
 - (void)parseJSONFileForCategories {

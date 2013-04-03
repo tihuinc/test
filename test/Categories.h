@@ -16,5 +16,6 @@
 - (void)readFromLocalStorage;
 - (NSArray *)allCategories;
 - (NSArray *)allCategoryNames;
+- (NSArray *)allCategoryMembersForCategory:(NSString *)categoryName;
 
 @end
