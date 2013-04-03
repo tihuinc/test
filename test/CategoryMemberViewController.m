@@ -86,7 +86,6 @@
     self.navigationItem.title = categoryName;
     NSArray * members = [self.categories allCategoryMembersForCategory:categoryName];
     for (NSDictionary *member in members){
-        NSLog(@"Adding member %@", member);
         [self addToCategoryMemberCoreData:[member objectForKey:@"name"] Value:[member objectForKey:@"value"]];
     }
 }
@@ -94,19 +93,38 @@
 - (void)addToCategoryMemberCoreData:(NSString *)name Value:(NSNumber *)value
 {
     NSManagedObjectContext *moc = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    
-    CategoryMember *categoryMember = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:moc];
-    categoryMember.name = name;
-    categoryMember.value = value;
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"CategoryMember" inManagedObjectContext:moc];
 
-    NSError *error = nil;
+    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                        initWithKey:@"name" ascending:YES];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    NSError *error;
+    NSArray *array = [moc executeFetchRequest:request error:&error];
+    if ([array count] == 0)
+    {
+        CategoryMember *categoryMember = [NSEntityDescription insertNewObjectForEntityForName:@"CategoryMember" inManagedObjectContext:moc];
+        categoryMember.name = name;
+        categoryMember.value = value;
+    }
+    else{
+        CategoryMember *member = [array objectAtIndex:0];
+        member.previousValue = member.value;
+        member.name = name;
+        member.value = value;
+    }
+
     if (![moc save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
-    NSLog(@"member is %@", categoryMember);
 }
 
 #pragma mark UITableView
