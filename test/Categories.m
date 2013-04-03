@@ -11,6 +11,7 @@
 @implementation Categories
 
 @synthesize categoriesDict;
+@synthesize lastCategoriesDict;
 
 - (id)init {
     if (self = [super init]) {
@@ -21,6 +22,7 @@
 - (void)dealloc{
     [super dealloc];
     [categoriesDict release];
+    [lastCategoriesDict release];
 }
 
 - (NSArray *)allCategories {
@@ -29,6 +31,15 @@
     }
     return nil;
 }
+
+
+- (NSArray *)allLastCategories {
+    if (self.lastCategoriesDict != nil) {
+        return self.lastCategoriesDict[@"categories"];
+    }
+    return nil;
+}
+
 
 - (NSArray *)allCategoryNames {
     NSMutableArray *names = [NSMutableArray new];
@@ -60,6 +71,21 @@
         }
     }
 
+    return [members autorelease];
+}
+
+- (NSArray *)allLastCategoryMembersForCategory:(NSString *)categoryName {
+    NSMutableArray *members = [NSMutableArray new];
+    for (NSDictionary *category in [self allLastCategories]) {
+        if ([categoryName isEqualToString:category[@"name"]])
+        {
+            for (NSDictionary *member in category[@"objects"]) {
+                [members addObject:member];
+            }
+            break;
+        }
+    }
+    
     return [members autorelease];
 }
 
