@@ -12,7 +12,7 @@
 
 @property (nonatomic, copy) NSDictionary *categoriesDict;
 
-- (void)writeToLocalStorage: (NSDictionary *)categoriesDict;
+- (void)saveDictionary: (NSDictionary *)categoriesDict;
 - (NSArray *)allCategories;
 - (NSArray *)allCategoryNames;
 - (NSArray *)allCategoryMembersForCategory:(NSString *)categoryName;

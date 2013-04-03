@@ -38,7 +38,7 @@
     return [names autorelease];
 }
 
-- (void)writeToLocalStorage: (NSDictionary *)categoriesDictionary {
+- (void)saveDictionary: (NSDictionary *)categoriesDictionary {
     self.categoriesDict = categoriesDictionary;
 }
 

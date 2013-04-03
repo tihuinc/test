@@ -82,15 +82,6 @@
 
 - (void)refresh:(id)sender
 {
-    /*
-     The following method generates an updated json file containing updated values for the category displayed by this view controller.
-     The categories.json file is located in this application's document's directory.
-     1) Import the contents of this file (NSJSONSerialization).
-     2) Parse the json data and update the "value" property of the CategoryMember Core Data entities.
-     3) Set the CategoryMember object's "previousValue" (See README) to its previous value.
-     4) Don't add duplicates.
-     5) You will need to add NSManagedObject instances to the view controller's managedObjectContext.
-     */
     [TestUtils refreshCategoriesJSONFile];
     [self parseJSONFileForCategories];
 }
@@ -103,7 +94,7 @@
     
     NSData* data = [content dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    [self.categories writeToLocalStorage:jsonDict];
+    [self.categories saveDictionary:jsonDict];
     [self processCategoryData];
 }
 
@@ -186,7 +177,6 @@
     return NO;
 }
 
-
 #pragma mark NSFetchedResultsController
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -213,17 +203,13 @@
     NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
+
     NSFetchedResultsController *aFetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil] autorelease];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
@@ -327,8 +313,8 @@
                                              CGImageGetBitsPerPixel(maskReference),
                                              CGImageGetBytesPerRow(maskReference),
                                              CGImageGetDataProvider(maskReference),
-                                             NULL, // Decode is null
-                                             YES // Should interpolate
+                                             NULL,
+                                             YES
                                              );
     
     CGImageRef maskedReference = CGImageCreateWithMask(imageReference, imageMask);
@@ -342,7 +328,6 @@
 
 - (UIImage *)imageWithColor:(UIColor *)imageColor {
     CGRect rect = CGRectMake(0, 0, 200, 200);
-    // Create a 1 by 1 pixel context
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
     [imageColor setFill];
     UIRectFill(rect);
